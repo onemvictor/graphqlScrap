@@ -11,12 +11,7 @@ namespace graphql_console
     {
         public Person GetPerson(IResolverContext ctx)
         {
-            var person = new Person
-            {
-                Id = 1,
-                Name = "John Smith",
-                Cars = new[] { new Car { Name = "Rush", Manufacturer = "Toyota" } }
-            };
+            var person = new PersonService().GetPerson();
             if (PersonCarDetailsRequested(ctx))
             {
                 var carService = new CarService();
@@ -51,6 +46,19 @@ namespace graphql_console
                 Console.WriteLine("error while collecting fields, exception {0}", ex);
                 throw;
             }
+        }
+    }
+
+    public class PersonService
+    {
+        public Person GetPerson()
+        {
+            return new Person
+            {
+                Id = 1,
+                Name = "John Smith",
+                Cars = new[] { new Car { Name = "Rush", Manufacturer = "Toyota" } }
+            };
         }
     }
 
