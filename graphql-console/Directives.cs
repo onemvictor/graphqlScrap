@@ -15,22 +15,7 @@ namespace graphql_console
         {
             descriptor.Name("my");
             descriptor.Location(DirectiveLocation.Object);
-            descriptor.Use<MyMiddleware>();
-        }
-    }
-
-    public class MyMiddleware
-    {
-        private readonly FieldDelegate _next;
-
-        public MyMiddleware(FieldDelegate next)
-        {
-            _next = next ?? throw new ArgumentNullException(nameof(next));
-        }
-
-        public async Task InvokeAsync(IDirectiveContext context)
-        {
-            await _next(context).ConfigureAwait(false);
+            descriptor.Use(nxt => ctx => nxt(ctx));
         }
     }
 }
